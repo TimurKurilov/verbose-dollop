@@ -1,0 +1,9 @@
+{% if tasks %}
+    {% for task in tasks %}
+    <h2>{{task.name}}</h2>
+    <h3>{{task.desc}}</h3>
+    <h4>{{task.date}}</h4>
+    {% endfor %}
+{% else %}
+    <h1> NO TASKSSSSSS </h1>
+{% endif %}

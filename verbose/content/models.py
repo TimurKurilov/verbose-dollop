@@ -7,6 +7,7 @@ class Task(models.Model):
     name = models.CharField(blank=False, max_length=55)
     desc = models.TextField(blank=True, max_length=255)
     date = models.DateTimeField(default=timezone.now)
+    
     def __str__(self):
         return self.name
 

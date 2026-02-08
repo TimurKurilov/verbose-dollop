@@ -1,5 +1,12 @@
 <form method="post">
     {% csrf_token %}
     {{ form }}
+    <form>
+    <!--
+  <div class="form-group">
+    <label for="formGroupExampleInput">Example label</label>
+    {{form.name}}
+  </div>
+    -->
     <input type="submit" value="Submit">
 </form>

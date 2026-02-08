@@ -21,6 +21,7 @@ from content import views as contentviews
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", contentviews.page, name="page"),
-    path("create_task", contentviews.create_task, name="create")
+    path("create_task/", contentviews.create_task, name="create"),
+    path("list/", contentviews.all_task, name="all_task"),
     
 ]
