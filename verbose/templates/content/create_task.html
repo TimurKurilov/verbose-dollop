@@ -1,12 +1,22 @@
-<form method="post">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+
+<form method="post" class="container mt-4">
     {% csrf_token %}
-    {{ form }}
-    <form>
-    <!--
-  <div class="form-group">
-    <label for="formGroupExampleInput">Example label</label>
-    {{form.name}}
-  </div>
-    -->
-    <input type="submit" value="Submit">
+
+    <div class="form-group">
+        {{ form.name.label_tag }}
+        {{ form.name }}
+    </div>
+
+    <div class="form-group">
+        {{ form.desc.label_tag }}
+        {{ form.desc }}
+    </div>
+
+    <div class="form-group">
+        {{ form.date.label_tag }}
+        {{ form.date }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
