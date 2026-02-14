@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Registration Form</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- Registration form -->
+        <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+            {% csrf_token %}  <!-- CSRF token for security -->
+
+            <!-- Registration form heading -->
+            <h1 style="text-align: center;"><span style="color: green;">Verbose</span></h1>
+            <h3>Register</h3>
+            <hr>
+
+
+            <div class="form-group">
+                <label for="exampleInputUsername1">{{form.username}}</label>
+                <input type="text" class="form-control" name="username" id="exampleInputUsername1"
+                    placeholder="Enter username" required>
+            </div>
+
+            <!-- Password input field -->
+            <div class="form-group">
+                <label for="exampleInputPassword1">{{form.password}}</label>
+                <input type="password" class="form-control" name="password" id="exampleInputPassword1"
+                    placeholder="Password" required>
+            </div>
+
+            <!-- Link to login page for users who already have an account -->
+            <p>Already have an account <a href="/login/">Login</a> </p>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
