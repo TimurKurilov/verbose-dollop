@@ -9,6 +9,7 @@ urlpatterns = [
     path("create_task/", contentviews.create_task, name="create"),
     path("list/", contentviews.all_task, name="all_task"),
     path('register/', authviews.RegisterView.as_view(), name='register'),
-    path('login/', authviews.LoginView.as_view(), name="login")
+    path('login/', authviews.LoginView.as_view(), name="login"),
+    path('logout/', authviews.logout_view, name="logout"),
     
 ]

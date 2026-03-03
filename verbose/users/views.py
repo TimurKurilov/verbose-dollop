@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect
 from django.views import View
 
@@ -28,3 +28,8 @@ class LoginView(View):
             login(request, user)
             return redirect('/')
         return render(request, 'auth/login.html', {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    return render(request, "auth/logout.html")
