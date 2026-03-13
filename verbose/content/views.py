@@ -1,4 +1,5 @@
-from django.shortcuts import redirect, render
+from django.utils import timezone
+rom django.shortcuts import redirect, render
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from content.forms import TaskForm
@@ -11,7 +12,10 @@ def page(request):
 def create_task(request):
     if not request.user.is_authenticated:
             return redirect("login")
-    tasks_count = Task.objects.filter(user=request.user).count()
+    tasks_count_by_date = Task.objects.filter(
+        user=request.user
+        date__date = timezone.now().date()
+        ).count()
     if tasks_count >= 3:
         messages.error(request, f"На сегодня все братик")
         return redirect("all_task")
