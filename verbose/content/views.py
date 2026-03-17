@@ -37,3 +37,7 @@ def all_task(request):
         return redirect("register")
     tasks = Task.objects.filter(user=request.user)
     return render(request, "content/all_tasks.html", {"tasks": tasks})
+
+def task_by_date(request, datee):
+    tasks_by_date = Task.objects.filter(user=request.user, date__date=datee)
+    return render(request, "content/tasks_by_date", {"tasks_by_date", tasks_by_date})    
