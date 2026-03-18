@@ -4,5 +4,9 @@ from content.models import Task
 class TaskForm(forms.ModelForm):
     
     class Meta:
-        model = Task
-        fields = ("name", "desc")
+    constraints = [
+        models.UniqueConstraint(
+            fields=["date", "slot"],
+            name="unique_user_day_slot"
+        )
+    ]
