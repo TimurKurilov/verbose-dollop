@@ -6,19 +6,31 @@ from content.forms import TaskForm
 from content.models import Task
 
 
+slots = {1,2,3}
+
 def page(request):
     return render(request, "content/page.html")
 
 def create_task(request):
     if not request.user.is_authenticated:
         return redirect("login")
-    tasks_count_by_date = Task.objects.filter(
+    
+    if Task.objects.filter(
         user=request.user,
         date__date = timezone.now().date(),
-        ).count()
-    if tasks_count_by_date >= 3:
-        messages.error(request, f"На сегодня все братик")
-        return redirect("all_task")
+        slot = 0
+        ):
+            messages.error(request, f"На сегодня все братик")
+            return redirect("all_task")
+    
+    taken = set(
+    Task.objects.filter(
+        user=request.user,
+        date__date=timezone.now().date()
+    ).values_list("slot", flat=True)
+    )
+    
+    free_slot = min(slots - taken)
 
     if request.method == "POST":
         form = TaskForm(request.POST)
@@ -26,6 +38,7 @@ def create_task(request):
             task = form.save(commit=False)
             task.user = request.user
             task.date = timezone.now()
+            task.slot = free_slot
             task.save()
             return HttpResponseRedirect("all_task")
     else:
