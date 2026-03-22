@@ -15,11 +15,15 @@ def create_task(request):
     if not request.user.is_authenticated:
         return redirect("login")
     
-    if Task.objects.filter(
+    today = timezone.now().date()
+    
+    taken_slots = Task.objects.filter(
         user=request.user,
-        date__date = timezone.now().date(),
-        slot = 0
-        ):
+        date__date=today
+    ).values_list("slot", flat=True)
+
+    taken = set(taken_slots)
+    if len(taken) >= len(slots):
             messages.error(request, f"На сегодня все братик")
             return redirect("all_task")
     

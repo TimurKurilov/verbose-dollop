@@ -1,12 +1,8 @@
 from django import forms
-from content.models import Task
+from .models import Task
+
 
 class TaskForm(forms.ModelForm):
-    
     class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=["user", "date", "slot"],
-                name="unique_user_day_slot"
-            )
-        ]
+        model = Task
+        fields = ["name"]
