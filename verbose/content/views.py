@@ -21,19 +21,26 @@ def create_task(request):
         user=request.user,
         date__date=today
     ).values_list("slot", flat=True)
-
-    taken = set(taken_slots)
-    if len(taken) >= len(slots):
-            messages.error(request, f"На сегодня все братик")
-            return redirect("all_task")
     
     taken = set(
-    Task.objects.filter(
-        user=request.user,
-        date__date=timezone.now().date()
-    ).values_list("slot", flat=True)
+        Task.objects.filter(
+            user=request.user,
+            day=today
+        ).values_list("slot", flat=True)
     )
     
+    taken = set(taken_slots)
+    if len(taken) >= len(slots):
+        messages.error(request, "На сегодня лимит задач достигнут")
+        return redirect("all_task")
+    
+    
+    free_slot = min(slots - taken)
+
+    if len(taken) >= len(slots):
+        messages.error(request, "На сегодня лимит задач достигнут")
+        return redirect("all_task")
+
     free_slot = min(slots - taken)
 
     if request.method == "POST":
@@ -41,12 +48,13 @@ def create_task(request):
         if form.is_valid():
             task = form.save(commit=False)
             task.user = request.user
-            task.date = timezone.now()
+            task.day = today
             task.slot = free_slot
             task.save()
-            return HttpResponseRedirect("all_task")
+            return redirect("all_task")
     else:
         form = TaskForm()
+
     return render(request, "content/create_task.html", {"form": form})
 
 def all_task(request):

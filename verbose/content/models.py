@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class Task(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=55)
-    slot = models.IntegerField()
+    slot = models.IntegerField(default=1)
     day = models.DateField()
     date = models.DateTimeField(default=timezone.now)
 
