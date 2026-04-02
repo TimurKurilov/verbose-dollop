@@ -19,7 +19,7 @@ def create_task(request):
     
     taken_slots = Task.objects.filter(
         user=request.user,
-        date__date=today
+        day=today
     ).values_list("slot", flat=True)
     
     taken = set(
@@ -63,6 +63,6 @@ def all_task(request):
     tasks = Task.objects.filter(user=request.user)
     return render(request, "content/all_tasks.html", {"tasks": tasks})
 
-def task_by_date(request, datee):
-    tasks_by_date = Task.objects.filter(user=request.user, date__date=datee)
+def task_by_date(request, created):
+    tasks_by_date = Task.objects.filter(user=request.user, created=created)
     return render(request, "content/tasks_by_date", {"tasks_by_date", tasks_by_date})    

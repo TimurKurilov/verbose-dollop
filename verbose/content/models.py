@@ -8,7 +8,7 @@ class Task(models.Model):
     name = models.CharField(max_length=55)
     slot = models.IntegerField(default=1)
     day = models.DateField()
-    date = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         constraints = [
@@ -17,3 +17,6 @@ class Task(models.Model):
                 name="unique_user_day_slot"
             )
         ]
+        
+    def __str__(self):
+        return f"{self.user} : {self.name} | slot={self.slot} | day={self.day} | created={self.created}"
