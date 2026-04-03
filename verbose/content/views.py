@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.utils import timezone
 from django.shortcuts import redirect, render
 from django.http import HttpResponseRedirect
@@ -33,13 +35,6 @@ def create_task(request):
     if len(taken) >= len(slots):
         messages.error(request, "На сегодня лимит задач достигнут")
         return redirect("all_task")
-    
-    
-    free_slot = min(slots - taken)
-
-    if len(taken) >= len(slots):
-        messages.error(request, "На сегодня лимит задач достигнут")
-        return redirect("all_task")
 
     free_slot = min(slots - taken)
 
@@ -63,6 +58,7 @@ def all_task(request):
     tasks = Task.objects.filter(user=request.user)
     return render(request, "content/all_tasks.html", {"tasks": tasks})
 
-def task_by_date(request, created):
-    tasks_by_date = Task.objects.filter(user=request.user, created=created)
-    return render(request, "content/tasks_by_date", {"tasks_by_date", tasks_by_date})    
+def tasks_by_date(request, date):
+    parsed_date = datetime.strptime(date, "%Y-%m-%d").date()
+    tasks_by_date = Task.objects.filter(user=request.user, day=parsed_date)
+    return render(request, "content/tasks_by_date.html", {"tasks_by_date": tasks_by_date})
