@@ -42,6 +42,36 @@
         </div>
 
     {% endif %}
+    <form id="dateForm">
+  <div>
+    <label for="task">Выберите дату создания задачи:</label>
+
+    <input
+      type="date"
+      id="task"
+      name="task"
+      min="{{ request.user.date_joined|date:'Y-m-d' }}"
+      max="{{ today|date:'Y-m-d' }}"
+      required
+    />
+  </div>
+
+  <div>
+    <button type="submit">Показать</button>
+  </div>
+</form>
+
+<script>
+  document.getElementById("dateForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const date = document.getElementById("task").value;
+
+    if (date) {
+      window.location.href = `/list/${date}/`;
+    }
+  });
+</script>
 
 </div>
 
