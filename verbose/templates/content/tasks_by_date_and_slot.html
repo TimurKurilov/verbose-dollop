@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tasks</title>
+    <title>{{ task.name }}</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -11,10 +11,10 @@
 
 <div class="container mt-5">
 
-    {% if tasks %}
+    {% if tasks_by_date_and_slot %}
         <div class="row g-4">
 
-            {% for task in tasks %}
+            {% for task in tasks_by_date_and_slot %}
             <div class="col-md-6 col-lg-4">
                 <div class="card shadow-sm h-100 rounded-4">
                     <div class="card-body">
@@ -22,13 +22,11 @@
                         <h5 class="card-title fw-bold">
                             {{ task.name }}
                         </h5>
-
                     </div>
 
                     <div class="card-footer bg-white border-0">
                         <small class="text-secondary">
                             {{ task.created|date:"d.m.Y H:i:s" }}
-                            {{ task.slot }}
                         </small>
                     </div>
                 </div>
@@ -39,40 +37,10 @@
     {% else %}
 
         <div class="text-center mt-5">
-            <h2 class="text-muted">No tasks yet</h2>
+            <h2 class="text-muted">No tasks_by_date yet</h2>
         </div>
 
     {% endif %}
-    <form id="dateForm">
-  <div>
-    <label for="task">Выберите дату создания задачи:</label>
-
-    <input
-      type="date"
-      id="task"
-      name="task"
-      min="{{ request.user.date_joined|date:'Y-m-d' }}"
-      max="{{ today|date:'Y-m-d' }}"
-      required
-    />
-  </div>
-
-  <div>
-    <button type="submit">Показать</button>
-  </div>
-</form>
-
-<script>
-  document.getElementById("dateForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const date = document.getElementById("task").value;
-
-    if (date) {
-      window.location.href = `/list/${date}/`;
-    }
-  });
-</script>
 
 </div>
 

@@ -63,6 +63,11 @@ def tasks_by_date(request, date):
     tasks_by_date = Task.objects.filter(user=request.user, day=parsed_date)
     return render(request, "content/tasks_by_date.html", {"tasks_by_date": tasks_by_date})
 
+def tasks_by_date_and_slot(request, date, slot):
+    parsed_date = datetime.strptime(date, "%Y-%m-%d").date()
+    tasks_by_date_and_slot = Task.objects.filter(user=request.user, day=parsed_date, slot=slot)
+    return render(request, "content/tasks_by_date_and_slot.html", {"tasks_by_date_and_slot": tasks_by_date_and_slot})
+
 def task_delete(request, date):
     parsed_date = datetime.strptime(date, "%Y-%m-%d").date()
     if not request.user.is_authenticated:
