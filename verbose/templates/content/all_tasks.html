@@ -29,6 +29,9 @@
                         <small class="text-secondary">
                             {{ task.created|date:"d.m.Y H:i:s" }}
                             {{ task.slot }}
+                            <a href="{% url 'tasks_by_date_and_slot' task.created|date:'Y-m-d' task.slot %}">
+                                more
+                            </a>
                         </small>
                     </div>
                 </div>
@@ -36,13 +39,6 @@
             {% endfor %}
 
         </div>
-    {% else %}
-
-        <div class="text-center mt-5">
-            <h2 class="text-muted">No tasks yet</h2>
-        </div>
-
-    {% endif %}
     <form id="dateForm">
   <div>
     <label for="task">Выберите дату создания задачи:</label>
@@ -75,6 +71,13 @@
 </script>
 
 </div>
+    {% else %}
+
+        <div class="text-center mt-5">
+            <h2 class="text-muted">Задач не найдено</h2>
+        </div>
+
+    {% endif %}
 
 </body>
 </html>

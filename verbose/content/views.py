@@ -68,10 +68,10 @@ def tasks_by_date_and_slot(request, date, slot):
     tasks_by_date_and_slot = Task.objects.filter(user=request.user, day=parsed_date, slot=slot)
     return render(request, "content/tasks_by_date_and_slot.html", {"tasks_by_date_and_slot": tasks_by_date_and_slot})
 
-def task_delete(request, date):
+def task_delete(request, date, slot):
     parsed_date = datetime.strptime(date, "%Y-%m-%d").date()
     if not request.user.is_authenticated:
         return redirect("login")
-    if task.user == request.user:
-        task = get_object_or_404(Task, created=date)
-        return redirect("all_task")
+    task = get_object_or_404(Task, day=parsed_date, slot=slot, user=request.user)
+    task.delete()
+    return redirect("all_task")
