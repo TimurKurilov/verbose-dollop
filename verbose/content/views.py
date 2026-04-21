@@ -34,7 +34,7 @@ def create_task(request):
     taken = set(taken_slots)
     if len(taken) >= len(slots):
         messages.error(request, "На сегодня лимит задач достигнут")
-        return redirect("all_task")
+        return redirect("list")
 
     free_slot = min(slots - taken)
 
@@ -46,7 +46,7 @@ def create_task(request):
             task.day = today
             task.slot = free_slot
             task.save()
-            return redirect("all_task")
+            return redirect("list")
     else:
         form = TaskForm()
 
@@ -74,4 +74,18 @@ def task_delete(request, date, slot):
         return redirect("login")
     task = get_object_or_404(Task, day=parsed_date, slot=slot, user=request.user)
     task.delete()
-    return redirect("all_task")
+    return redirect("list")
+
+def task_edit(request, date, slot):
+    parsed_date = datetime.strptime(date, "%Y-%m-%d").date()
+    task = get_object_or_404(Task, day=parsed_date, slot=slot)
+    if task.user != request.user:
+        return redirect("list/")
+    if request.method == "POST":
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save
+            return redirect("list/")
+    else:
+        form = TaskForm(instance=task)
+    return render(request, "content/task_edit.html", {"tasks_edit": form})
