@@ -84,8 +84,8 @@ def task_edit(request, date, slot):
     if request.method == "POST":
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
-            form.save
-            return redirect("list/")
+            form.save()
+            return redirect("list")
     else:
         form = TaskForm(instance=task)
-    return render(request, "content/task_edit.html", {"tasks_edit": form})
+    return render(request, "content/task_edit.html", {"form": form})
