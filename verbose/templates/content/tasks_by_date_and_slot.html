@@ -26,7 +26,11 @@
                     <div class="card-body">
 
                         <h5 class="card-title fw-bold">
-                            {{ task.name }}
+                            {{ task.name }}  {% if task.is_completed %}
+                                ✅
+                            {% else %}
+                                ❌
+                            {% endif %}
                         </h5>
                     </div>
 

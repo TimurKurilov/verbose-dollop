@@ -8,6 +8,7 @@ class Task(models.Model):
     name = models.CharField(max_length=55)
     slot = models.IntegerField(default=1)
     day = models.DateField()
+    is_completed = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:

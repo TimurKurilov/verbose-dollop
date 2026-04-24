@@ -17,9 +17,26 @@
     {% endif %}
 
     <div>
-        <label for="id_name">Title:</label><br>
+        <label for="{{ form.name.id_for_label }}">Title:</label><br>
         {{ form.name }}
-        {{ form.name.errors }}
+        {% if form.name.errors %}
+            <div style="color: red;">
+                {{ form.name.errors }}
+            </div>
+        {% endif %}
+    </div>
+
+    <br>
+
+    <div>
+        <label for="{{ form.is_completed.id_for_label }}">
+            {{ form.is_completed }} Completed
+        </label>
+        {% if form.is_completed.errors %}
+            <div style="color: red;">
+                {{ form.is_completed.errors }}
+            </div>
+        {% endif %}
     </div>
 
     <br>

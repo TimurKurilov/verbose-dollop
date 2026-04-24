@@ -20,13 +20,21 @@
                     <div class="card-body">
 
                         <h5 class="card-title fw-bold">
-                            {{ task.name }}
+                            {{ task.name }}  {% if task.is_completed %}
+                                ✅
+                            {% else %}
+                                ❌
+                            {% endif %}
                         </h5>
                     </div>
 
                     <div class="card-footer bg-white border-0">
                         <small class="text-secondary">
                             {{ task.created|date:"d.m.Y H:i:s" }}
+                            {{ task.slot }}
+                            <a href="{% url 'tasks_by_date_and_slot' task.created|date:'Y-m-d' task.slot %}">
+                                more
+                            </a>
                         </small>
                     </div>
                 </div>
