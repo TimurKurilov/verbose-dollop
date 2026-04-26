@@ -46,13 +46,13 @@
     <form id="dateForm">
   <div>
     <label for="task">Выберите дату создания задачи:</label>
-
+    {% now "Y-m-d" as today %}
     <input
       type="date"
       id="task"
       name="task"
       min="{{ request.user.date_joined|date:'Y-m-d' }}"
-      max="{{ today|date:'Y-m-d' }}"
+      max="{{ today }}"
       required
     />
   </div>
